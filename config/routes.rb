@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   # patch 'admin/merchants/:id', to: 'admin/merchants#update'
   patch '/merchants/:merchant_id/invoice_items', to: 'invoice_items#update'
 
+  get '/merchants/:merchant_id/bulk_discounts', to: 'bulk_discounts#index'
   # get '/admin/invoices', to: 'admin/invoices#index'
   # get '/admin/invoices/:id', to: 'admin/invoices#show'
 
