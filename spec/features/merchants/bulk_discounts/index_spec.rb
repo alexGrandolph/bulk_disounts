@@ -20,11 +20,12 @@ RSpec.describe 'Merchant Bulk Discount Index Page' do
       
       disc1 = BulkDiscount.create!(name: '10 for 10%', percentage: 10, threshold: 10, merchant_id: merch4.id)
       disc2 = BulkDiscount.create!(name: '5 for 5%', percentage: 5, threshold: 5, merchant_id: merch4.id)
-      disc3 = BulkDiscount.create!(name: '5 for 20%', percentage: 5, threshold: 20, merchant_id: merch4.id)
+      disc3 = BulkDiscount.create!(name: '5 for 20%', percentage: 20, threshold: 5, merchant_id: merch4.id)
 
       other_disc = BulkDiscount.create!(name: 'Other Merchants Discount', percentage: 5, threshold: 50, merchant_id: merch5.id)
       
       visit "/merchants/#{merch4.id}/bulk_discounts"
+      save_and_open_page
       expect(page).to_not have_content("Other Merchants Discount")
 
       within "#bulk_discount-#{disc1.id}" do 
