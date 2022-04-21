@@ -58,7 +58,7 @@ RSpec.describe 'Merchant Bulk Discount Index Page' do
       disc2 = BulkDiscount.create!(name: '5 for 5%', percentage: 5, threshold: 5, merchant_id: merch4.id)
 
       visit "/merchants/#{merch4.id}/bulk_discounts"
-      save_and_open_page
+      # save_and_open_page
       click_link "Create a New Bulk Discount"
       expect(current_path).to eq("/merchants/#{merch4.id}/bulk_discounts/new")
     
