@@ -13,12 +13,12 @@ RSpec.describe 'Merchant Bulk Discount Index Page' do
       visit "/merchants/#{merch4.id}/bulk_discounts"
      
       click_link "Create a New Bulk Discount"
-      
       fill_in "Name", with: "New 50 for 50"
-      fill_in "Percent Off", with: 50
-      fill_in "Minimum Quantity", with: 50
+      fill_in "Percentage", with: 50
+      fill_in "Threshold", with: 50
       click_on "Submit"
       expect(current_path).to eq("/merchants/#{merch4.id}/bulk_discounts")
+      # save_and_open_page
       expect(page).to have_content("New 50 for 50")
     end 
   end
