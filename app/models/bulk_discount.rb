@@ -1,0 +1,6 @@
+class BulkDiscount < ApplicationRecord
+
+
+
+
+end 
