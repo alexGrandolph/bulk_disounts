@@ -14,6 +14,42 @@ RSpec.describe 'Merchant Bulk Discount Index Page' do
       expect(current_path).to eq("/merchants/#{merch4.id}/bulk_discounts")  
     end
 
+    it 'I see all my bulk discounts and thier attributes, each is a link to their show page' do
+      merch4 = Merchant.create!(name: 'My Dog Skeeter', created_at: DateTime.now, updated_at: DateTime.now, status: 1)
+      merch5 = Merchant.create!(name: 'Corgi Town', created_at: DateTime.now, updated_at: DateTime.now, status: 0)
+      
+      disc1 = BulkDiscount.create!(name: '10 for 10%', percentage: 10, threshold: 10, merchant_id: merch4.id)
+      disc2 = BulkDiscount.create!(name: '5 for 5%', percentage: 5, threshold: 5, merchant_id: merch4.id)
+      disc3 = BulkDiscount.create!(name: '5 for 20%', percentage: 5, threshold: 20, merchant_id: merch4.id)
+
+      other_disc = BulkDiscount.create!(name: 'Other Merchants Discount', percentage: 5, threshold: 50, merchant_id: merch5.id)
+      
+      visit "/merchants/#{merch4.id}/bulk_discounts"
+      expect(page).to_not have_content("Other Merchants Discount")
+
+      within "#bulk_discount-#{disc1.id}" do 
+        expect(page).to have_content("10 for 10%")
+        expect(page).to have_content("Percent Off: 10")
+        expect(page).to have_content("Minimum Quantity Threshold: 10")
+        expect(page).to have_link("10 for 10%")
+      end 
+      within "#bulk_discount-#{disc2.id}" do 
+        expect(page).to have_content("5 for 5%")
+        expect(page).to have_content("Percent Off: 5")
+        expect(page).to have_content("Minimum Quantity Threshold: 5")
+        expect(page).to have_link("5 for 5%")
+
+      end 
+      within "#bulk_discount-#{disc3.id}" do 
+        expect(page).to have_content("5 for 20%")
+        expect(page).to have_content("Percent Off: 20")
+        expect(page).to have_content("Minimum Quantity Threshold: 5")
+        click_link "5 for 20%" 
+      end 
+      expect(current_path).to eq("/merchants/#{merch4.id}/bulk_discounts/#{disc3.id}")
+
+    end
+
 
 
   end
