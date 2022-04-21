@@ -25,7 +25,7 @@ RSpec.describe 'Merchant Bulk Discount Index Page' do
       other_disc = BulkDiscount.create!(name: 'Other Merchants Discount', percentage: 5, threshold: 50, merchant_id: merch5.id)
       
       visit "/merchants/#{merch4.id}/bulk_discounts"
-      save_and_open_page
+      # save_and_open_page
       expect(page).to_not have_content("Other Merchants Discount")
 
       within "#bulk_discount-#{disc1.id}" do 
@@ -48,9 +48,18 @@ RSpec.describe 'Merchant Bulk Discount Index Page' do
         click_link "5 for 20%" 
       end 
       expect(current_path).to eq("/merchants/#{merch4.id}/bulk_discounts/#{disc3.id}")
-
     end
-
+  end
+  describe 'Creating a new bulk discount on bulk_discount index page' do
+    
+    it 'has a link to create a new bulk discount' do 
+      merch4 = Merchant.create!(name: 'My Dog Skeeter', created_at: DateTime.now, updated_at: DateTime.now, status: 1)
+      visit "/merchants/#{merch4.id}/bulk_discounts"
+      
+      click_link "Create a New Bulk Discount"
+      expect(current_path).to eq("/merchants/#{merch4.id}/bulk_discounts/new")
+    
+    end 
 
 
   end
