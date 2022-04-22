@@ -15,24 +15,25 @@ class BulkDiscountsController < ApplicationController
   end
 
   def create
-    @merchant = Merchant.find(params[:merchant_id])
-    discount = @merchant.bulk_discounts.create!(
-      name: params[:name],
-      percentage: params[:percentage],
-      threshold: params[:threshold,]
-    )
-    if discount.save
-      redirect_to "/merchants/#{@merchant.id}/bulk_discounts"
-    # else 
-    #   flash[:notice] = "Invalid! Try Again!"
-    #   redirect_to "/merchants/#{@merchant.id}/new"
+    merchant = Merchant.find(params[:merchant_id])
+    if params[:percentage].to_i >= 100
+      flash[:notice] = "It is company policy for discounts to be less than or eqaul to 100%"
+      redirect_to "/merchants/#{merchant.id}/bulk_discounts/new"
+    else 
+      discount = merchant.bulk_discounts.create!(
+        name: params[:name],
+        percentage: params[:percentage],
+        threshold: params[:threshold,]
+      )
+      discount.save
+      redirect_to "/merchants/#{merchant.id}/bulk_discounts"
     end 
   end
   
   def destroy
-    @merchant = Merchant.find(params[:merchant_id])
+    merchant = Merchant.find(params[:merchant_id])
     BulkDiscount.destroy(params[:id])
-    redirect_to "/merchants/#{@merchant.id}/bulk_discounts"
+    redirect_to "/merchants/#{merchant.id}/bulk_discounts"
   end
 
   def edit
