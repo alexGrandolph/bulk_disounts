@@ -19,10 +19,23 @@ RSpec.describe 'Merchant Bulk Discount Show Page' do
       expect(page).to have_content("Name of Discount: 5 for 5%")
       expect(page).to have_content("Percent Off: 5")
       expect(page).to have_content("Minimum Item Quantity Threshold: 5")
-     
-
-
     end 
+  end
+  
+  describe 'Editing a Bulk Discount' do
+
+    it 'I click the link to edit the discount, taking me to a new page with a form' do
+      
+      merch5 = Merchant.create!(name: 'Corgi Town', created_at: DateTime.now, updated_at: DateTime.now, status: 0)
+      disc1 = BulkDiscount.create!(name: '10 for 10%', percentage: 10, threshold: 10, merchant_id: merch5.id)
+      
+      visit "/merchants/#{merch5.id}/bulk_discounts/#{disc1.id}"
+      click_on "Edit This Bulk Discount"
+      expect(current_path).to eq("/merchants/#{merch5.id}/bulk_discounts/#{disc1.id}/edit")
+
+
+    end
+
 
 
   end 
