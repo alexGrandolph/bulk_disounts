@@ -30,5 +30,5 @@
 <h3>Total Revenue From This Invoice:</h3>
 <section id="total_revenue">
   Revenue: $<%= @merchant.total_revenue_for_invoice(@invoice.id)  %>
-  Revenue After Discount: $<%= @merchant.invoice_revenue_with_discount(@invoice.id)  %>
+  Revenue After Discount: $<%= @merchant.invoice_revenue_with_discounts(@invoice.id)  %>
 </section>
