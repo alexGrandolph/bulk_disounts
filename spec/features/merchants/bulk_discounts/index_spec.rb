@@ -76,6 +76,7 @@ RSpec.describe 'Merchant Bulk Discount Index Page' do
       within "#bulk_discount-#{disc2.id}" do 
         click_on "Delete This Discount"
       end 
+      # save_and_open_page
       expect(current_path).to eq("/merchants/#{merch4.id}/bulk_discounts")
       expect(page).to_not have_content("Five for Five")  
        
