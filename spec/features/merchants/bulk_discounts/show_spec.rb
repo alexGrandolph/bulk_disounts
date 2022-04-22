@@ -33,8 +33,6 @@ RSpec.describe 'Merchant Bulk Discount Show Page' do
       click_on "Edit This Bulk Discount"
       save_and_open_page
       expect(current_path).to eq("/merchants/#{merch5.id}/bulk_discounts/#{disc1.id}/edit")
-
-
     end
 
 
