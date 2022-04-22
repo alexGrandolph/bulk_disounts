@@ -88,9 +88,9 @@ class Merchant < ApplicationRecord
   end
   
   def invoice_revenue_with_discounts(invoice_id)
-    invoice = Invoice.find(invoice_id)
-    x = invoice.invoice_items
-  end
+   
+
+  end 
   
   
 end

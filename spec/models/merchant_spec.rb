@@ -316,7 +316,7 @@ RSpec.describe Merchant, type: :model do
     
     it 'returns a merchants revenue after applicable discounts for a given invoice' do
       custy = Customer.create!(first_name: 'Elron', last_name: 'Hubbard', created_at: DateTime.now, updated_at: DateTime.now)
-      invoice1 = Invoice.create!(status: 0, customer_id: custy.id, created_at: DateTime.now, updated_at: DateTime.now)
+      invoice1 = Invoice.create!(status: 1, customer_id: custy.id, created_at: DateTime.now, updated_at: DateTime.now)
       
       merch1 = Merchant.create!(name: 'My Dog Skeeter', created_at: DateTime.now, updated_at: DateTime.now, status: 1)
       item1 = merch1.items.create!(name: "Golden Rose", description: "24k gold rose", unit_price: 100, created_at: Time.now, updated_at: Time.now)
@@ -333,8 +333,8 @@ RSpec.describe Merchant, type: :model do
       invoice_item_3 = InvoiceItem.create(item_id: item3.id, unit_price: item3.unit_price, quantity: 2, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
       
       merch2 = Merchant.create!(name: 'Cheese Corp', created_at: DateTime.now, updated_at: DateTime.now, status: 1)
-      item5 = merch1.items.create!(name: "Brisket", description: "just a brisket", unit_price: 7645, created_at: Time.now, updated_at: Time.now)
-      invoice_item_4 = InvoiceItem.create(item_id: item5.id, unit_price: item5.unit_price, quantity: 11, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
+      item5 = merch2.items.create!(name: "Brisket", description: "just a brisket", unit_price: 7645, created_at: Time.now, updated_at: Time.now)
+      invoice_item_4 = InvoiceItem.create(item_id: item5.id, unit_price: item5.unit_price, quantity: 16, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
       disc2 = BulkDiscount.create!(name: '4 for 60%', percentage: 60, threshold: 4, merchant_id: merch2.id)
       
       #this invoice and item should not be part of the calculation
@@ -342,10 +342,6 @@ RSpec.describe Merchant, type: :model do
       invoice_item_5 = InvoiceItem.create!(item_id: item4.id, invoice_id: invoice2.id, quantity: 55, unit_price: item4.unit_price, created_at: DateTime.now, updated_at: DateTime.now)
 
       expect(merch1.invoice_revenue_with_discounts(invoice1.id)).to eq(21.90)
-
-
-
-
     end
 
 
