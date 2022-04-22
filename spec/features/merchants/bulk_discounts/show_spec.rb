@@ -11,13 +11,13 @@ RSpec.describe 'Merchant Bulk Discount Show Page' do
       disc2 = BulkDiscount.create!(name: '5 for 5%', percentage: 5, threshold: 5, merchant_id: merch5.id)
       
       visit "/merchants/#{merch5.id}/bulk_discounts/#{disc2.id}"
-      save_and_open_page
+      # save_and_open_page
       expect(page).to_not have_content("10 for 10%")
       expect(page).to_not have_content("#{disc1.percentage}")
       expect(page).to_not have_content("#{disc1.threshold}")
 
       expect(page).to have_content("Name of Discount: 5 for 5%")
-      expect(page).to have_content("Percent Off: 10")
+      expect(page).to have_content("Percent Off: 5")
       expect(page).to have_content("Minimum Item Quantity Threshold: 5")
      
 
