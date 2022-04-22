@@ -140,7 +140,7 @@ RSpec.describe 'Merchant Invoice Show Page' do
       visit "/merchants/#{merch1.id}/invoices/#{invoice1.id}"
       save_and_open_page
       expect(page).to have_content("Revenue: $25.0")
-      expect(page).to have_content("Revenue After Discount: ")
+      expect(page).to have_content("Revenue After Discount: $21.90 ")
     end
 
 
