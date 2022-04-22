@@ -15,7 +15,6 @@ class BulkDiscountsController < ApplicationController
   end
 
   def create
-    
     @merchant = Merchant.find(params[:merchant_id])
     discount = @merchant.bulk_discounts.create!(
       name: params[:name],
@@ -35,6 +34,12 @@ class BulkDiscountsController < ApplicationController
     BulkDiscount.destroy(params[:id])
     redirect_to "/merchants/#{@merchant.id}/bulk_discounts"
   end
+
+  def edit
+    @merchant = Merchant.find(params[:merchant_id])
+    @discount = BulkDiscount.find(params[:id])
+  end
+  
   
   
   

@@ -5,4 +5,7 @@
 <p> Percent Off: <%= @discount.percentage %> </p>
 <p> Minimum Item Quantity Threshold: <%= @discount.threshold %> </p>
 
+<br>
+
+<%= link_to "Edit This Bulk Discount", "/merchants/#{@merchant.id}/bulk_discounts/#{@discount.id}/edit", method: :patch %><br><br>
 
