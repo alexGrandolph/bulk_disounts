@@ -63,7 +63,22 @@ RSpec.describe 'Merchant Bulk Discount Index Page' do
       expect(current_path).to eq("/merchants/#{merch4.id}/bulk_discounts/new")
     
     end 
-
-
   end
+
+  describe 'Deleting a Bulk Discount' do
+
+    it 'has a link to delete each discount, refreshes page showing deletion' do
+      merch4 = Merchant.create!(name: 'My Dog Skeeter', created_at: DateTime.now, updated_at: DateTime.now, status: 1)
+      disc1 = BulkDiscount.create!(name: '10 for 10%', percentage: 10, threshold: 10, merchant_id: merch4.id)
+      disc2 = BulkDiscount.create!(name: 'Five for Five', percentage: 5, threshold: 5, merchant_id: merch4.id)
+      visit "/merchants/#{merch4.id}/bulk_discounts"
+
+      within "#bulk_discount-#{disc2.id}" do 
+        click_on "Delete This Discount"
+      end 
+      expect(current_path).to eq("/merchants/#{merch4.id}/bulk_discounts")
+      expect(page).to_not have_content("Five for Five")  
+       
+    end
+  end 
 end 

@@ -24,6 +24,10 @@ class BulkDiscountsController < ApplicationController
     )
     if discount.save
       redirect_to "/merchants/#{@merchant.id}/bulk_discounts"
+    # else 
+    #   flash[:notice] = "Invalid! Try Again!"
+    #   redirect_to "/merchants/#{@merchant.id}/new"
+
     end 
   end
   
