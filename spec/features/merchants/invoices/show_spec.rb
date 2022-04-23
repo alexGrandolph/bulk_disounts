@@ -116,7 +116,7 @@ RSpec.describe 'Merchant Invoice Show Page' do
 
   describe "Bulk Discounts, As a Visitor on Merchant/Invoice Show Page" do
 
-    it 'I see a total revenue calculation with discounts included and without' do
+    xit 'I see a total revenue calculation with discounts included and without' do
       custy = Customer.create!(first_name: 'Elron', last_name: 'Hubbard', created_at: DateTime.now, updated_at: DateTime.now)
       merch1 = Merchant.create!(name: 'My Dog Skeeter', created_at: DateTime.now, updated_at: DateTime.now, status: 1)
       item1 = merch1.items.create!(name: "Golden Rose", description: "24k gold rose", unit_price: 100, created_at: Time.now, updated_at: Time.now)

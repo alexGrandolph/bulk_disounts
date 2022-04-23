@@ -28,8 +28,14 @@ class Invoice < ApplicationRecord
     invoice.invoice_items.sum('unit_price * quantity') / 100.to_f
   end
 
+  def merchant_revenue_for_invoice(merchant)
+    merchant.invoice_items
+            .sum('invoice_items.unit_price * invoice_items.quantity') / 100.to_f
+  end
+  
 
-  def discount_revenue_for_merchant(merchant_id)
+
+  def discount_revenue_for_merchant(merchant)
      y = merchants.where(id: merchant_id)
      .joins(:bulk_discounts)
      .where('invoice_items.quantity >= bulk_discounts.threshold')
