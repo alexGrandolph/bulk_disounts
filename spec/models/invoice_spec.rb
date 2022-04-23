@@ -135,7 +135,7 @@ RSpec.describe Invoice, type: :model do
       end
     end
   describe "bulk discounts, class and instance methods" do
-    it 'returns a merchants revenue after applicable discounts for a given invoice' do
+    it 'returns a merchants dollar amount discount after applicable discounts for a given invoice' do
       custy = Customer.create!(first_name: 'Elron', last_name: 'Hubbard', created_at: DateTime.now, updated_at: DateTime.now)
       invoice1 = Invoice.create!(status: 1, customer_id: custy.id, created_at: DateTime.now, updated_at: DateTime.now)
       
@@ -159,10 +159,10 @@ RSpec.describe Invoice, type: :model do
       disc2 = BulkDiscount.create!(name: '4 for 60%', percentage: 60, threshold: 4, merchant_id: merch2.id)
       
       #this invoice and item should not be part of the calculation
-      # invoice2 = Invoice.create!(customer_id: custy.id, created_at: DateTime.now, updated_at: DateTime.now)
-      # invoice_item_6 = InvoiceItem.create!(item_id: item4.id, invoice_id: invoice2.id, quantity: 55, unit_price: item4.unit_price, created_at: DateTime.now, updated_at: DateTime.now)
+      invoice2 = Invoice.create!(customer_id: custy.id, created_at: DateTime.now, updated_at: DateTime.now)
+      invoice_item_6 = InvoiceItem.create!(item_id: item3.id, invoice_id: invoice2.id, quantity: 55, unit_price: item3.unit_price, created_at: DateTime.now, updated_at: DateTime.now)
 
-      expect(invoice1.discount_revenue_for_merchant(merch1.id)).to eq(21.90)
+      expect(invoice1.discount_amount_for_merchant(merch1)).to eq(4.4)
     end 
     
     it 'returns the invoice revenue for a given merchant' do
