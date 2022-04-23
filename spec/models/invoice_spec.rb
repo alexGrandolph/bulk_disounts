@@ -113,27 +113,26 @@ RSpec.describe Invoice, type: :model do
 
   describe 'invoice revenue calculation' do
     it 'calculates total revenue on invoice' do
-        merch1 = FactoryBot.create(:merchant)
-        merch2 = FactoryBot.create(:merchant)
-        cust1 = FactoryBot.create(:customer)
-        item1 = FactoryBot.create(:item, merchant_id: merch1.id, unit_price: 1000)
-        item2 = FactoryBot.create(:item, merchant_id: merch1.id, unit_price: 1000)
-        item3 = FactoryBot.create(:item, merchant_id: merch1.id, unit_price: 1000)
-        item4 = FactoryBot.create(:item, merchant_id: merch2.id, unit_price: 1000)
+      merch1 = FactoryBot.create(:merchant)
+      merch2 = FactoryBot.create(:merchant)
+      cust1 = FactoryBot.create(:customer)
+      item1 = FactoryBot.create(:item, merchant_id: merch1.id, unit_price: 1000)
+      item2 = FactoryBot.create(:item, merchant_id: merch1.id, unit_price: 1000)
+      item3 = FactoryBot.create(:item, merchant_id: merch1.id, unit_price: 1000)
+      item4 = FactoryBot.create(:item, merchant_id: merch2.id, unit_price: 1000)
 
-        invoice1 = FactoryBot.create(:invoice, customer_id: cust1.id)
-        invoice_item_1 = FactoryBot.create(:invoice_item, item_id: item1.id, invoice_id: invoice1.id, unit_price: item1.unit_price, quantity: 1)
-        invoice_item_2 = FactoryBot.create(:invoice_item, item_id: item2.id, invoice_id: invoice1.id, unit_price: item2.unit_price, quantity: 1)
-        invoice_item_4 = FactoryBot.create(:invoice_item, item_id: item3.id, invoice_id: invoice1.id, unit_price: item4.unit_price, quantity: 1)
-        invoice_item_3 = FactoryBot.create(:invoice_item, item_id: item4.id, invoice_id: invoice1.id, unit_price: item3.unit_price, quantity: 1)
+      invoice1 = FactoryBot.create(:invoice, customer_id: cust1.id)
+      invoice_item_1 = FactoryBot.create(:invoice_item, item_id: item1.id, invoice_id: invoice1.id, unit_price: item1.unit_price, quantity: 1)
+      invoice_item_2 = FactoryBot.create(:invoice_item, item_id: item2.id, invoice_id: invoice1.id, unit_price: item2.unit_price, quantity: 1)
+      invoice_item_4 = FactoryBot.create(:invoice_item, item_id: item3.id, invoice_id: invoice1.id, unit_price: item4.unit_price, quantity: 1)
+      invoice_item_3 = FactoryBot.create(:invoice_item, item_id: item4.id, invoice_id: invoice1.id, unit_price: item3.unit_price, quantity: 1)
 
-        invoice2 = FactoryBot.create(:invoice, customer_id: cust1.id)
-        invoice_item_5 = FactoryBot.create(:invoice_item, item_id: item2.id, invoice_id: invoice2.id, unit_price: item2.unit_price, quantity: 10)
-# require "pry"; binding.pry
-        expect(Invoice.revenue_for_invoice(invoice2.id)).to eq(100.00)
-        expect(Invoice.revenue_for_invoice(invoice1.id)).to eq(40.00)
-      end
+      invoice2 = FactoryBot.create(:invoice, customer_id: cust1.id)
+      invoice_item_5 = FactoryBot.create(:invoice_item, item_id: item2.id, invoice_id: invoice2.id, unit_price: item2.unit_price, quantity: 10)
+      expect(Invoice.revenue_for_invoice(invoice2.id)).to eq(100.00)
+      expect(Invoice.revenue_for_invoice(invoice1.id)).to eq(40.00)
     end
+  end
 
     describe "bulk discounts, class and instance methods" do
       it 'returns the invoice revenue for a given merchant' do
@@ -145,7 +144,6 @@ RSpec.describe Invoice, type: :model do
         item2 = merch1.items.create!(name: 'Dark Sole Shoes', description: "Dress shoes", unit_price: 200, created_at: Time.now, updated_at: Time.now)
         item3 = merch1.items.create!(name: 'Alot of Cheese', description: "It's cheese", unit_price: 200, created_at: Time.now, updated_at: Time.now)
   
-        
         invoice_item_1 = InvoiceItem.create(item_id: item1.id, unit_price: item1.unit_price, quantity: 10, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
         invoice_item_2 = InvoiceItem.create(item_id: item2.id, unit_price: item2.unit_price, quantity: 6, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
         invoice_item_3 = InvoiceItem.create(item_id: item3.id, unit_price: item3.unit_price, quantity: 2, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
@@ -164,7 +162,6 @@ RSpec.describe Invoice, type: :model do
       item1 = merch1.items.create!(name: "Golden Rose", description: "24k gold rose", unit_price: 100, created_at: Time.now, updated_at: Time.now)
       item2 = merch1.items.create!(name: 'Dark Sole Shoes', description: "Dress shoes", unit_price: 200, created_at: Time.now, updated_at: Time.now)
       item3 = merch1.items.create!(name: 'Alot of Cheese', description: "It's cheese", unit_price: 200, created_at: Time.now, updated_at: Time.now)
-      # item4 = merch1.items.create!(name: 'Not Cheese', description: "It is NOT cheese", unit_price: 2000, created_at: Time.now, updated_at: Time.now)
 
       disc1 = BulkDiscount.create!(name: '10 for 10%', percentage: 10, threshold: 10, merchant_id: merch1.id)
       disc2 = BulkDiscount.create!(name: '5 for 5%', percentage: 5, threshold: 5, merchant_id: merch1.id)

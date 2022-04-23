@@ -29,6 +29,6 @@
 <% end %>
 <h3>Total Revenue From This Invoice:</h3>
 <section id="total_revenue">
-  Revenue: $<%= @merchant.total_revenue_for_invoice(@invoice.id)  %>
-  Revenue After Discount: $<%= @merchant.invoice_revenue_with_discounts(@invoice.id)  %>
+  Revenue: $<%="%.2f" % @invoice.merchant_revenue_for_invoice(@merchant) %><br>
+  Revenue After Discount: $<%="%.2f" % @invoice.merchant_revenue_after_discount(@merchant)  %>
 </section>
