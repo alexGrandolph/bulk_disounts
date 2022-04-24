@@ -132,7 +132,7 @@ RSpec.describe 'Merchant Invoice Show Page' do
       invoice_item_1 = InvoiceItem.create(item_id: item1.id, unit_price: item1.unit_price, quantity: 11, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
       invoice_item_2 = InvoiceItem.create(item_id: item2.id, unit_price: item2.unit_price, quantity: 5, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
       invoice_item_3 = InvoiceItem.create(item_id: item3.id, unit_price: item3.unit_price, quantity: 2, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
-      binding.pry
+
       #this invoice and item should not be part of the calculation
       invoice2 = Invoice.create!(customer_id: custy.id, created_at: DateTime.now, updated_at: DateTime.now)
       invoice_item_2 = InvoiceItem.create!(item_id: item4.id, invoice_id: invoice2.id, quantity: 55, unit_price: item4.unit_price, created_at: DateTime.now, updated_at: DateTime.now)
@@ -159,7 +159,7 @@ RSpec.describe 'Merchant Invoice Show Page' do
       invoice_item_2 = InvoiceItem.create(item_id: item2.id, unit_price: item2.unit_price, quantity: 16, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
 
       visit "/merchants/#{merch1.id}/invoices/#{invoice1.id}"
-
+      save_and_open_page
       within "#invoice_item-#{invoice_item_1.id}" do
         expect(page).to_not have_content("Link to Applied Bulk Discount")
       end

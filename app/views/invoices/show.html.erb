@@ -19,7 +19,11 @@
     <%= f.hidden_field :invoice_item_id, value: "#{invoice_item.id}"  %>
     <%= f.hidden_field :invoice_id, value: "#{@invoice.id}"  %>
 
-    <%= f.submit 'Update Item Status' %>
+    <%= f.submit 'Update Item Status' %><br>
+  Link to Applicable Bulk Discount: <% if invoice_item.has_discount? == true %>
+                                   <%= link_to "Link to Applied Bulk Discount", "/merchants/#{@merchant.id}/bulk_discounts/#{invoice_item.bulk_discount.id}" %> 
+
+                                    <% end  %>
   <% end %>
   <br><br>
 
