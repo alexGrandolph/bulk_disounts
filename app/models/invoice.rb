@@ -51,6 +51,8 @@ class Invoice < ApplicationRecord
     total_revenue = merchant_revenue_for_invoice(merchant)
     total_revenue - amount
   end
+
+  
   
   
 end
