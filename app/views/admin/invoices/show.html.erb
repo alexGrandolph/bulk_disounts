@@ -5,7 +5,11 @@
 <h3>Customer First Name: <%= @invoice.customer.first_name %></h3>
 <h3>Customer Last Name: <%= @invoice.customer.last_name %></h3>
 <h1> Invoice Number: <%= @invoice.id %></h1>
-<h4>Total Revenue: $<%= Invoice.revenue_for_invoice(@invoice.id) %></h4>
+
+<h4>Total Revenue: $<%="%.2f" % Invoice.revenue_for_invoice(@invoice.id) %></h4>
+ 
+ 
+ 
  <h2><b>Items:</b></h2>
   <% @invoice.invoice_items.each do |invoice_item| %>
   <h3><%= invoice_item.item.name %></h3>

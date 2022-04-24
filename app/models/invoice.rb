@@ -36,14 +36,14 @@ class Invoice < ApplicationRecord
   
   def discount_amount_for_merchant(merchant)
     discount = merchants.where(id: merchant.id)
-    .joins(:bulk_discounts)
-    .where('invoice_items.quantity >= bulk_discounts.threshold')
-    .select('invoice_items.*')
-    .group('invoice_items.item_id')
-    .maximum('invoice_items.quantity * invoice_items.unit_price * bulk_discounts.percentage / 100')
-    .pluck(1)
-    .sum
-    discount / 100.to_f
+                        .joins(:bulk_discounts)
+                        .where('invoice_items.quantity >= bulk_discounts.threshold')
+                        .select('invoice_items.*')
+                        .group('invoice_items.item_id')
+                        .maximum('invoice_items.quantity * invoice_items.unit_price * bulk_discounts.percentage / 100')
+                        .pluck(1)
+                        .sum
+                        discount / 100.to_f
   end
 
   def merchant_revenue_after_discount(merchant)

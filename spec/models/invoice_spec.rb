@@ -174,7 +174,7 @@ RSpec.describe Invoice, type: :model do
       merch2 = Merchant.create!(name: 'Cheese Corp', created_at: DateTime.now, updated_at: DateTime.now, status: 1)
       item5 = merch2.items.create!(name: "Brisket", description: "just a brisket", unit_price: 500, created_at: Time.now, updated_at: Time.now)
       invoice_item_5 = InvoiceItem.create(item_id: item5.id, unit_price: item5.unit_price, quantity: 15, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
-      disc2 = BulkDiscount.create!(name: '4 for 60%', percentage: 60, threshold: 4, merchant_id: merch2.id)
+      disc5 = BulkDiscount.create!(name: '4 for 60%', percentage: 60, threshold: 4, merchant_id: merch2.id)
       
       #this invoice and item should not be part of the calculation
       invoice2 = Invoice.create!(customer_id: custy.id, created_at: DateTime.now, updated_at: DateTime.now)
