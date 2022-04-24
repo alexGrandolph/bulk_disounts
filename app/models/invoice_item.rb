@@ -14,4 +14,15 @@ class InvoiceItem < ApplicationRecord
     unit_price / 100.to_f
   end
 
+  def has_discount?
+    # binding.pry
+    if  bulk_discounts.where('? >= threshold', quantity).empty? == false
+      true
+    # x = bulk_discounts.where('? >= threshold', quantity).order(percentage: :desc)
+    else 
+      false
+   end 
+  end
+  
+
 end

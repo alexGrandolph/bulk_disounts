@@ -45,8 +45,8 @@ RSpec.describe InvoiceItem, type: :model do
       invoice_item_1 = InvoiceItem.create(item_id: item1.id, unit_price: item1.unit_price, quantity: 1, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
       invoice_item_2 = InvoiceItem.create(item_id: item2.id, unit_price: item2.unit_price, quantity: 16, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
 
-      expect(invoice_item_1.has_discount?).to eq(false)
       expect(invoice_item_2.has_discount?).to eq(true)
+      expect(invoice_item_1.has_discount?).to eq(false)
     end
 
 
