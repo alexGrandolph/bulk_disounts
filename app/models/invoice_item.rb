@@ -1,7 +1,9 @@
 class InvoiceItem < ApplicationRecord
   belongs_to :invoice
   belongs_to :item
-
+  has_one :merchant, through: :item
+  has_many :bulk_discounts, through: :merchant
+  
   enum status: {packaged: 0, pending: 1, shipped: 2}
   validates_presence_of :quantity
   validates_presence_of :status
@@ -12,7 +14,20 @@ class InvoiceItem < ApplicationRecord
     unit_price / 100.to_f
   end
 
-  # def incomplete_invoices
-  # invoice_items.where(status: [0,1])
-  # end
+  def has_discount?
+    if  bulk_discounts.where('? >= threshold', quantity).empty? == false
+      true
+    else 
+      false
+   end 
+  end
+
+  def discount
+    bulk_discounts.where('? >= threshold', quantity)
+    .order(percentage: :desc)
+    .first
+  end
+  
+  
+
 end

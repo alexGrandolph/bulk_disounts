@@ -30,33 +30,24 @@ class Merchant < ApplicationRecord
     invoices.uniq
   end
 
-
-  def current_invoice_items(invoice_id)
-    invoice_items.where(invoice_id: invoice_id)
-  end
-
-  def total_revenue_for_invoice(invoice_id)
-    invoice = Invoice.find(invoice_id)
-    invoice.invoice_items.sum('unit_price * quantity') / 100.to_f
-  end
-
-
+  
+  
   def self.status_enabled
     where(status: 0)
   end
-
+  
   def self.status_disabled
     where(status: 1)
   end
-
+  
   def enabled_items
     items.where(status: 1)
   end
-
+  
   def disabled_items
     items.where(status: 0)
   end
-
+  
   def top_five_items
     items.joins(invoice_items: [invoice: :transactions])
     .where(transactions: {result: 0})
@@ -65,9 +56,9 @@ class Merchant < ApplicationRecord
     # .order('items.*, sum(invoice_items.quantity * invoice_items.unit_price)')
     .group(:id)
     .limit(5)
-
+    
   end
-
+  
   def self.top_5_by_revenue
     joins(:invoices, [:transactions, :invoice_items])
     .where(transactions: {result: 0})
@@ -75,9 +66,9 @@ class Merchant < ApplicationRecord
     .group(:id)
     .order('total_revenue DESC')
     .limit(5)
-
+    
   end
-
+  
   def top_revenue_day
     invoices.joins(:transactions, :invoice_items)
     .where(transactions: {result: 0})
@@ -87,6 +78,19 @@ class Merchant < ApplicationRecord
     .first.created_at.to_datetime
   end
 
-  
+  def current_invoice_items(invoice_id)
+    invoice_items.where(invoice_id: invoice_id)
+  end
 
+  def total_revenue_for_invoice(invoice_id)
+    invoice = Invoice.find(invoice_id)
+    invoice.invoice_items.sum('unit_price * quantity') / 100.to_f
+  end
+  
+  def invoice_revenue_with_discounts(invoice_id)
+   
+
+  end 
+  
+  
 end
