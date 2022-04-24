@@ -15,14 +15,19 @@ class InvoiceItem < ApplicationRecord
   end
 
   def has_discount?
-    # binding.pry
     if  bulk_discounts.where('? >= threshold', quantity).empty? == false
       true
-    # x = bulk_discounts.where('? >= threshold', quantity).order(percentage: :desc)
     else 
       false
    end 
   end
+
+  def discount
+    bulk_discounts.where('? >= threshold', quantity)
+    .order(percentage: :desc)
+    .first
+  end
+  
   
 
 end
