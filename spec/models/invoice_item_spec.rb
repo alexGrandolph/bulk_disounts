@@ -26,8 +26,30 @@ RSpec.describe InvoiceItem, type: :model do
       expect(invoice_item_1.price_to_dollars).to eq(751.07)
 
     end
-
-
-
   end
+
+  describe 'Bulk Discounts Instance Methods' do
+
+    it '#has_discount? returns true if an invoice item has an applicable discount' do
+      custy = Customer.create!(first_name: 'Elron', last_name: 'Hubbard', created_at: DateTime.now, updated_at: DateTime.now)
+      merch1 = Merchant.create!(name: 'My Dog Skeeter', created_at: DateTime.now, updated_at: DateTime.now, status: 1)
+      item1 = merch1.items.create!(name: "Golden Rose", description: "24k gold rose", unit_price: 100, created_at: Time.now, updated_at: Time.now)
+      item2 = merch1.items.create!(name: 'Dark Sole Shoes', description: "Dress shoes", unit_price: 200, created_at: Time.now, updated_at: Time.now)
+      
+      disc1 = BulkDiscount.create!(name: '10 for 10%', percentage: 10, threshold: 10, merchant_id: merch1.id)
+      disc2 = BulkDiscount.create!(name: '5 for 5%', percentage: 5, threshold: 5, merchant_id: merch1.id)
+      disc3 = BulkDiscount.create!(name: '5 for 20%', percentage: 20, threshold: 5, merchant_id: merch1.id)
+
+      
+      invoice1 = Invoice.create!(status: 0, customer_id: custy.id, created_at: DateTime.now, updated_at: DateTime.now)
+      invoice_item_1 = InvoiceItem.create(item_id: item1.id, unit_price: item1.unit_price, quantity: 1, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
+      invoice_item_2 = InvoiceItem.create(item_id: item2.id, unit_price: item2.unit_price, quantity: 16, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
+
+      expect(invoice_item_1.has_discount?).to eq(false)
+      expect(invoice_item_2.has_discount?).to eq(true)
+    end
+
+
+  end 
+
 end
