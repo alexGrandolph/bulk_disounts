@@ -59,7 +59,6 @@ RSpec.describe InvoiceItem, type: :model do
       disc2 = BulkDiscount.create!(name: '5 for 5%', percentage: 5, threshold: 5, merchant_id: merch1.id)
       disc3 = BulkDiscount.create!(name: '5 for 20%', percentage: 20, threshold: 5, merchant_id: merch1.id)
 
-      
       invoice1 = Invoice.create!(status: 0, customer_id: custy.id, created_at: DateTime.now, updated_at: DateTime.now)
       invoice_item_1 = InvoiceItem.create(item_id: item2.id, unit_price: item2.unit_price, quantity: 16, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
       expect(invoice_item_1.discount).to eq(disc3)

@@ -159,7 +159,7 @@ RSpec.describe 'Merchant Invoice Show Page' do
       invoice_item_2 = InvoiceItem.create(item_id: item2.id, unit_price: item2.unit_price, quantity: 16, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
 
       visit "/merchants/#{merch1.id}/invoices/#{invoice1.id}"
-      save_and_open_page
+      # save_and_open_page
       within "#invoice_item-#{invoice_item_1.id}" do
         expect(page).to_not have_content("Link to Applied Bulk Discount")
       end
