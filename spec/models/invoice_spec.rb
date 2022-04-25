@@ -285,8 +285,8 @@ RSpec.describe Invoice, type: :model do
       item2 = merch1.items.create!(name: 'Dark Sole Shoes', description: "Dress shoes", unit_price: 200, created_at: Time.now, updated_at: Time.now)
       item3 = merch1.items.create!(name: 'Alot of Cheese', description: "It's cheese", unit_price: 200, created_at: Time.now, updated_at: Time.now)
 
-      disc1 = BulkDiscount.create!(name: '10 for 10%', percentage: 10, threshold: 5, merchant_id: merch1.id)
-      disc2 = BulkDiscount.create!(name: '5 for 20%', percentage: 20, threshold: 10, merchant_id: merch1.id)
+      disc1 = BulkDiscount.create!(name: '5 for 10%', percentage: 10, threshold: 5, merchant_id: merch1.id)
+      disc2 = BulkDiscount.create!(name: '10 for 20%', percentage: 20, threshold: 10, merchant_id: merch1.id)
       
       invoice_item_1 = InvoiceItem.create(item_id: item1.id, unit_price: item1.unit_price, quantity: 10, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
       invoice_item_2 = InvoiceItem.create(item_id: item2.id, unit_price: item2.unit_price, quantity: 6, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)

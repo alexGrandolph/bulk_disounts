@@ -7,7 +7,7 @@
 <h1> Invoice Number: <%= @invoice.id %></h1>
 
 <h4>Total Revenue: $<%="%.2f" % Invoice.revenue_for_invoice(@invoice.id) %></h4>
-<h4>Total Revenue After Discounts: $<%="%.2f" % @invoice.total_discounted_revenue %></h4>
+<h4>Total Revenue After Discounts: $<%="%.2f" % @invoice.total_revenue_after_discount %></h4>
  
  
  
