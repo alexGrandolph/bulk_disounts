@@ -27,16 +27,16 @@ class Invoice < ApplicationRecord
     invoice = Invoice.find(invoice_id)
     invoice.invoice_items.sum('unit_price * quantity') / 100.to_f
   end
-
+## bulk discount project starts here 
   def total_revenue
     invoice_items.sum('unit_price * quantity') / 100.to_f
   end
   
 
   def merchant_revenue_for_invoice(merchant)
-    merchant.invoice_items.joins(:invoice).where("invoices.id = ?", self.id).sum('invoice_items.unit_price * invoice_items.quantity') / 100.to_f
-    # merchant.invoice_items
-    #         .sum('invoice_items.unit_price * invoice_items.quantity') / 100.to_f
+    merchant.invoice_items
+            .joins(:invoice).where("invoices.id = ?", self.id)
+            .sum('invoice_items.unit_price * invoice_items.quantity') / 100.to_f
   end
   
   def discount_amount_for_merchant(merchant)
@@ -71,6 +71,6 @@ class Invoice < ApplicationRecord
   def total_revenue_after_discount
     total_rev = total_revenue
     dollars_off = total_discounted_amount
-    final_total = total_rev - dollars_off.to_f
+    total_rev - dollars_off.to_f
   end 
 end
