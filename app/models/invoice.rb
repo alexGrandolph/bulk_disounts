@@ -67,6 +67,10 @@ class Invoice < ApplicationRecord
     discounted = amount.sum(&:discount_rev) 
     discounted / 100
   end 
-  
-  
+
+  def total_revenue_after_discount
+    total_rev = total_revenue
+    dollars_off = total_discounted_amount
+    final_total = total_rev - dollars_off.to_f
+  end 
 end
