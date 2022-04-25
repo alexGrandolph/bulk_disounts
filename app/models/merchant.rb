@@ -68,6 +68,7 @@ class Merchant < ApplicationRecord
     .limit(5)
     
   end
+    # y = merchants.joins(:bulk_discounts).where(:id == :merchant_id).where('invoice_items.quantity >= bulk_discounts.threshold').select('invoice_items.*, sum(invoice_items.quantity * invoice_items.unit_price * bulk_discounts.percentage / 100) AS discount_rev').group('invoice_items.id')
   
   def top_revenue_day
     invoices.joins(:transactions, :invoice_items)
@@ -86,11 +87,6 @@ class Merchant < ApplicationRecord
     invoice = Invoice.find(invoice_id)
     invoice.invoice_items.sum('unit_price * quantity') / 100.to_f
   end
-  
-  def invoice_revenue_with_discounts(invoice_id)
-   
-
-  end 
   
   
 end

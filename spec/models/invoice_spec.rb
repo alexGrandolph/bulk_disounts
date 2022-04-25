@@ -241,7 +241,7 @@ RSpec.describe Invoice, type: :model do
       invoice2 = Invoice.create!(customer_id: custy.id, created_at: DateTime.now, updated_at: DateTime.now)
       invoice_item_6 = InvoiceItem.create!(item_id: item3.id, invoice_id: invoice2.id, quantity: 55, unit_price: item3.unit_price, created_at: DateTime.now, updated_at: DateTime.now)
 
-      expect(invoice1.total_discounted_revenue).to eq(31.3)
+      expect(invoice1.total_discounted_amount).to eq(5.2)
 
     end 
     
