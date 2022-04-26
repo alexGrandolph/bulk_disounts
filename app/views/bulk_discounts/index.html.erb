@@ -14,3 +14,12 @@
 
 <% end %>
 <%= link_to "Create a New Bulk Discount", "/merchants/#{@merchant.id}/bulk_discounts/new" %><br>
+
+
+<h5>Upcoming Holidays</h5><br>
+
+<% @facade.holiday.next_holidays.each do |holiday| %>
+  
+  <li><%= holiday %></li>
+
+<% end %>
