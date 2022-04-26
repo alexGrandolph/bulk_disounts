@@ -37,7 +37,7 @@ RSpec.describe 'Merchant Bulk Discount Edit Page' do
       click_on "Update"
      
       expect(current_path).to eq("/merchants/#{merch5.id}/bulk_discounts/#{disc1.id}/edit")
-      expect(page).to have_content("It is company policy for discounts to be less than or eqaul to 100%")
+      expect(page).to have_content("BAD! Discount Percentage Must Be Greater Than 0 AND Less Than 100")
 
     end 
 
@@ -53,7 +53,7 @@ RSpec.describe 'Merchant Bulk Discount Edit Page' do
       click_on "Update"
      save_and_open_page
       expect(current_path).to eq("/merchants/#{merch5.id}/bulk_discounts/#{disc1.id}/edit")
-      expect(page).to have_content("It is company policy for discounts to be less than or eqaul to 100%")
+      expect(page).to have_content("BAD! Discount Percentage Must Be Greater Than 0 AND Less Than 100")
 
     end 
 
