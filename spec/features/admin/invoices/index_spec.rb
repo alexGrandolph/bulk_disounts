@@ -14,7 +14,7 @@ RSpec.describe "Admin Invoice Page" do
       visit '/admin/invoices'
     end
 
-    it'shows a list of all invoice ids as links to their respective show page', :vcr do
+    it 'shows a list of all invoice ids as links to their respective show page', :vcr do
     expect(page).to have_link("#{@invoice_1.id}")
     expect(page).to have_link("#{@invoice_2.id}")
     expect(page).to have_link("#{@invoice_3.id}")

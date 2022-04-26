@@ -70,7 +70,7 @@ RSpec.describe 'the admin invoice show page' do
 
   describe 'Bulk Discounts, As a Visitor' do
     
-    it 'Shows Total Revenue before and after discounts are applied' do
+    it 'Shows Total Revenue before and after discounts are applied', :vcr do
 
       custy = Customer.create!(first_name: 'Elron', last_name: 'Hubbard', created_at: DateTime.now, updated_at: DateTime.now)
       invoice1 = Invoice.create!(status: 1, customer_id: custy.id, created_at: DateTime.now, updated_at: DateTime.now)

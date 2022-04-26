@@ -1,8 +1,10 @@
+require 'httparty'
+
 class BulkDiscountsController < ApplicationController
 
   def index
     @merchant = Merchant.find(params[:merchant_id])
-   
+    @facade = HolidayFacade.new 
   end
 
   def show
@@ -47,7 +49,6 @@ class BulkDiscountsController < ApplicationController
     discount.update(name: params[:name], percentage: params[:percentage], threshold: params[:threshold])
     redirect_to "/merchants/#{merchant.id}/bulk_discounts/#{discount.id}"
   end
-  
   
   
   
