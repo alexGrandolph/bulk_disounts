@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe 'Merchant Bulk Discount Index Page' do
 
   describe 'As a Visitor' do
-    it 'on my merchant dashboard I see a link to view all my discounts' do
+    it 'on my merchant dashboard I see a link to view all my discounts', :vcr do
       merch4 = Merchant.create!(name: 'My Dog Skeeter', created_at: DateTime.now, updated_at: DateTime.now, status: 1)
       merch5 = Merchant.create!(name: 'Corgi Town', created_at: DateTime.now, updated_at: DateTime.now, status: 0)
       
@@ -14,7 +14,7 @@ RSpec.describe 'Merchant Bulk Discount Index Page' do
       expect(current_path).to eq("/merchants/#{merch4.id}/bulk_discounts")  
     end
 
-    it 'I see all my bulk discounts and thier attributes, each is a link to their show page' do
+    it 'I see all my bulk discounts and thier attributes, each is a link to their show page', :vcr do
       merch4 = Merchant.create!(name: 'My Dog Skeeter', created_at: DateTime.now, updated_at: DateTime.now, status: 1)
       merch5 = Merchant.create!(name: 'Corgi Town', created_at: DateTime.now, updated_at: DateTime.now, status: 0)
       
@@ -52,7 +52,7 @@ RSpec.describe 'Merchant Bulk Discount Index Page' do
   end
   describe 'Creating a new bulk discount on bulk_discount index page' do
     
-    it 'has a link to create a new bulk discount' do 
+    it 'has a link to create a new bulk discount', :vcr do 
       merch4 = Merchant.create!(name: 'My Dog Skeeter', created_at: DateTime.now, updated_at: DateTime.now, status: 1)
       disc1 = BulkDiscount.create!(name: '10 for 10%', percentage: 10, threshold: 10, merchant_id: merch4.id)
       disc2 = BulkDiscount.create!(name: '5 for 5%', percentage: 5, threshold: 5, merchant_id: merch4.id)
@@ -67,7 +67,7 @@ RSpec.describe 'Merchant Bulk Discount Index Page' do
 
   describe 'Deleting a Bulk Discount' do
 
-    it 'has a link to delete each discount, refreshes page showing deletion' do
+    it 'has a link to delete each discount, refreshes page showing deletion', :vcr do
       merch4 = Merchant.create!(name: 'My Dog Skeeter', created_at: DateTime.now, updated_at: DateTime.now, status: 1)
       disc1 = BulkDiscount.create!(name: '10 for 10%', percentage: 10, threshold: 10, merchant_id: merch4.id)
       disc2 = BulkDiscount.create!(name: 'Five for Five', percentage: 5, threshold: 5, merchant_id: merch4.id)

@@ -4,7 +4,7 @@ RSpec.describe 'Merchant Bulk Discount Edit Page' do
 
   describe 'As a Visitor' do
 
-    it 'I fill in the form, Submitting takes me back to the bulk discount index, I see the changes' do
+    it 'I fill in the form, Submitting takes me back to the bulk discount index, I see the changes', :vcr do
       merch5 = Merchant.create!(name: 'Corgi Town', created_at: DateTime.now, updated_at: DateTime.now, status: 0)
       disc1 = BulkDiscount.create!(name: '10 for 10%', percentage: 10, threshold: 10, merchant_id: merch5.id)
       
