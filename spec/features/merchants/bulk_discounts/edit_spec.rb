@@ -15,7 +15,7 @@ RSpec.describe 'Merchant Bulk Discount Edit Page' do
       fill_in "Threshold", with: 14
       click_on "Update"
       expect(current_path).to eq("/merchants/#{merch5.id}/bulk_discounts/#{disc1.id}")
-      # save_and_open_page
+      #sad path
       expect(page).to_not have_content("10 for 10%")
       expect(page).to_not have_content("Percent Off: 10")
       expect(page).to_not have_content("Minimum Item Quantity Threshold: 10")
@@ -25,7 +25,7 @@ RSpec.describe 'Merchant Bulk Discount Edit Page' do
       expect(page).to have_content("Minimum Item Quantity Threshold: 14")
     end 
 
-    it 'Will not allow for editing percentage above 100' do 
+    it 'Will not allow for editing percentage above 100', :vcr do 
       merch5 = Merchant.create!(name: 'Corgi Town', created_at: DateTime.now, updated_at: DateTime.now, status: 0)
       disc1 = BulkDiscount.create!(name: '10 for 10%', percentage: 10, threshold: 10, merchant_id: merch5.id)
       
@@ -38,10 +38,9 @@ RSpec.describe 'Merchant Bulk Discount Edit Page' do
      
       expect(current_path).to eq("/merchants/#{merch5.id}/bulk_discounts/#{disc1.id}/edit")
       expect(page).to have_content("BAD! Discount Percentage Must Be Greater Than 0 AND Less Than 100")
-
     end 
 
-    it 'Will not allow for editing percentage to be a negative number' do 
+    it 'Will not allow for editing percentage to be a negative number', :vcr do 
       merch5 = Merchant.create!(name: 'Corgi Town', created_at: DateTime.now, updated_at: DateTime.now, status: 0)
       disc1 = BulkDiscount.create!(name: '10 for 10%', percentage: 10, threshold: 10, merchant_id: merch5.id)
       
@@ -51,14 +50,10 @@ RSpec.describe 'Merchant Bulk Discount Edit Page' do
       fill_in "Percentage", with: -100
       fill_in "Threshold", with: 14
       click_on "Update"
-     save_and_open_page
+     
       expect(current_path).to eq("/merchants/#{merch5.id}/bulk_discounts/#{disc1.id}/edit")
       expect(page).to have_content("BAD! Discount Percentage Must Be Greater Than 0 AND Less Than 100")
 
     end 
-
-    
-
-
   end 
 end 
