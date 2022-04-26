@@ -63,19 +63,8 @@ class BulkDiscountsController < ApplicationController
       end 
 
       def invalid_threshold
-        # binding.pry
         params[:threshold].count("a-zA-Z") > 0 || params[:threshold].to_i < 0
       end
-
-      # def error_message
-      #   flash[:notice] = "BAD! Discount Percentage Must Be Greater Than 0 AND Less Than 100"
-      # end
-      
-      
-  
-  
-  
-
 end 
     # if params[:percentage].to_i >= 100 || params[:percentage].to_i < 0
     #   flash[:notice] = "BAD! Discount Percentage Must Be Greater Than 0 AND Less Than 100"
