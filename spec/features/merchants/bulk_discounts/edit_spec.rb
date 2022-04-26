@@ -25,6 +25,22 @@ RSpec.describe 'Merchant Bulk Discount Edit Page' do
       expect(page).to have_content("Minimum Item Quantity Threshold: 14")
     end 
 
+    it 'Will not allow for editing percentage above 100' do 
+      merch5 = Merchant.create!(name: 'Corgi Town', created_at: DateTime.now, updated_at: DateTime.now, status: 0)
+      disc1 = BulkDiscount.create!(name: '10 for 10%', percentage: 10, threshold: 10, merchant_id: merch5.id)
+      
+      visit "/merchants/#{merch5.id}/bulk_discounts/#{disc1.id}"
+      click_on "Edit This Bulk Discount"
+      fill_in "Name", with: "Updated 50% Off"
+      fill_in "Percentage", with: 200
+      fill_in "Threshold", with: 14
+      click_on "Update"
+
+      expect(current_path).to eq("/merchants/#{merch5.id}/bulk_discounts/#{disc1.id}")
+      expect(page).to have_content("It is company policy for discounts to be less than or eqaul to 100%")
+
+    end 
+
 
   end 
 end 
