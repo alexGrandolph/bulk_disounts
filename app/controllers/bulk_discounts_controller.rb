@@ -18,7 +18,8 @@ class BulkDiscountsController < ApplicationController
 
   def create
     merchant = Merchant.find(params[:merchant_id])
-    if params[:percentage].to_i >= 100 || params[:percentage].to_i < 0
+    
+    if invalid_percentage == true || invalid_threshold == true 
       flash[:notice] = "BAD! Discount Percentage Must Be Greater Than 0 AND Less Than 100"
       redirect_to "/merchants/#{merchant.id}/bulk_discounts/new"
     else 
