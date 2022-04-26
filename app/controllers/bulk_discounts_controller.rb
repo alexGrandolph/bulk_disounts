@@ -18,8 +18,8 @@ class BulkDiscountsController < ApplicationController
 
   def create
     merchant = Merchant.find(params[:merchant_id])
-    if params[:percentage].to_i >= 100
-      flash[:notice] = "It is company policy for discounts to be less than or eqaul to 100%"
+    if params[:percentage].to_i >= 100 || params[:percentage].to_i < 0
+      flash[:notice] = "BAD! Discount Percentage Must Be Greater Than 0 AND Less Than 100"
       redirect_to "/merchants/#{merchant.id}/bulk_discounts/new"
     else 
       discount = merchant.bulk_discounts.create!(
@@ -44,10 +44,16 @@ class BulkDiscountsController < ApplicationController
   end
   
   def update
-    merchant = Merchant.find(params[:merchant_id])
-    discount = BulkDiscount.find(params[:id])
-    discount.update(name: params[:name], percentage: params[:percentage], threshold: params[:threshold])
-    redirect_to "/merchants/#{merchant.id}/bulk_discounts/#{discount.id}"
+    @merchant = Merchant.find(params[:merchant_id])
+    @discount = BulkDiscount.find(params[:id])
+
+    if params[:percentage].to_i >= 100 || params[:percentage].to_i < 0
+      flash[:notice] = "BAD! Discount Percentage Must Be Greater Than 0 AND Less Than 100"
+      redirect_to "/merchants/#{@merchant.id}/bulk_discounts/#{@discount.id}/edit", method: :patch
+    else 
+      @discount.update(name: params[:name], percentage: params[:percentage], threshold: params[:threshold])
+      redirect_to "/merchants/#{@merchant.id}/bulk_discounts/#{@discount.id}"
+    end 
   end
   
   
