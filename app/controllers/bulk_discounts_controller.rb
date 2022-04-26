@@ -64,7 +64,7 @@ class BulkDiscountsController < ApplicationController
 
       def invalid_threshold
         # binding.pry
-        params[:threshold].count("a-zA-Z") > 0
+        params[:threshold].count("a-zA-Z") > 0 || params[:threshold].to_i < 0
       end
 
       # def error_message
