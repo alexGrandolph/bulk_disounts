@@ -73,4 +73,17 @@ class Invoice < ApplicationRecord
     dollars_off = total_discounted_amount
     total_rev - dollars_off.to_f
   end 
+
+  def invoice_items_discount
+    total = invoice_items.map do |invoice_item|
+      if invoice_item.has_discount? == true
+        invoice_item.discount_revenue
+      else 
+        invoice_item.revenue
+      end 
+    end 
+    total.sum   
+  end
+  
+  
 end

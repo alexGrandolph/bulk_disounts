@@ -66,6 +66,37 @@ RSpec.describe InvoiceItem, type: :model do
 
     end
 
+    it 'calculates invoice_item revenue when discount is applied' do
+      custy = Customer.create!(first_name: 'Elron', last_name: 'Hubbard', created_at: DateTime.now, updated_at: DateTime.now)
+      merch1 = Merchant.create!(name: 'My Dog Skeeter', created_at: DateTime.now, updated_at: DateTime.now, status: 1)
+      item1 = merch1.items.create!(name: "Golden Rose", description: "24k gold rose", unit_price: 200, created_at: Time.now, updated_at: Time.now)
+      item2 = merch1.items.create!(name: 'Dark Sole Shoes', description: "Dress shoes", unit_price: 500, created_at: Time.now, updated_at: Time.now)
+
+      invoice1 = Invoice.create!(status: 0, customer_id: custy.id, created_at: DateTime.now, updated_at: DateTime.now)
+      invoice_item_1 = InvoiceItem.create(item_id: item1.id, unit_price: item1.unit_price, quantity: 5, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
+      invoice_item_2 = InvoiceItem.create(item_id: item2.id, unit_price: item2.unit_price, quantity: 10, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
+
+      disc1 = BulkDiscount.create!(name: '4 for 10%', percentage: 10, threshold: 4, merchant_id: merch1.id)
+      disc2 = BulkDiscount.create!(name: '4 for 25%', percentage: 25, threshold: 5, merchant_id: merch1.id)
+
+      expect(invoice_item_1.discount_revenue).to eq(7.50)
+    end 
+    it 'calculates invoice_item revenue' do
+      custy = Customer.create!(first_name: 'Elron', last_name: 'Hubbard', created_at: DateTime.now, updated_at: DateTime.now)
+      merch1 = Merchant.create!(name: 'My Dog Skeeter', created_at: DateTime.now, updated_at: DateTime.now, status: 1)
+      item1 = merch1.items.create!(name: "Golden Rose", description: "24k gold rose", unit_price: 200, created_at: Time.now, updated_at: Time.now)
+      item2 = merch1.items.create!(name: 'Dark Sole Shoes', description: "Dress shoes", unit_price: 500, created_at: Time.now, updated_at: Time.now)
+
+      invoice1 = Invoice.create!(status: 0, customer_id: custy.id, created_at: DateTime.now, updated_at: DateTime.now)
+      invoice_item_1 = InvoiceItem.create(item_id: item1.id, unit_price: item1.unit_price, quantity: 5, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
+      invoice_item_2 = InvoiceItem.create(item_id: item2.id, unit_price: item2.unit_price, quantity: 10, invoice_id: invoice1.id, created_at: DateTime.now, updated_at: DateTime.now)
+
+      disc1 = BulkDiscount.create!(name: '4 for 10%', percentage: 10, threshold: 4, merchant_id: merch1.id)
+      disc2 = BulkDiscount.create!(name: '4 for 25%', percentage: 25, threshold: 5, merchant_id: merch1.id)
+
+      expect(invoice_item_1.revenue).to eq(10.0)
+    end 
+
   end 
 
 end

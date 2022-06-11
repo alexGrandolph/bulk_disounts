@@ -28,6 +28,16 @@ class InvoiceItem < ApplicationRecord
     .first
   end
   
+  def revenue
+    unit_price * quantity / 100.to_f
+  end
+
+  def discount_revenue
+    amount_off = revenue * discount.percentage / 100.to_f
+    revenue - amount_off
+  end
+  
+  
   
 
 end
